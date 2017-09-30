@@ -22,7 +22,9 @@ delete_student:
     path:     /api/student/delete
     defaults: 
         _controller: FormerDUTStudentsBundle:Api:deleteStudent
-    methods:  [POST]
+    methods:  [GET]
+    requirements:
+        id: \d+
     
 modify_student:
     path:     /api/student/modify/{id}

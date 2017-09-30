@@ -1,0 +1,15 @@
+former_dut_students:
+    resource: "@FormerDUTStudentsBundle/Resources/config/routing.yml"
+    prefix:   /
+    # src/OC/PlatformBundle/Resources/config/routing.yml
+    
+login:
+    path: /login
+    defaults:
+        _controller: FormerDUTStudentsBundle:Security:login
+    
+login_check:
+    path: /login_check
+    
+logout:
+    path: /logout

@@ -1,0 +1,33 @@
+students:
+    path:     /api/student/getAll
+    defaults:
+        _controller: FormerDUTStudentsBundle:Api:getAllStudents
+    methods:  [GET]
+
+student:
+    path:     /api/student/{id}
+    defaults:
+        _controller: FormerDUTStudentsBundle:Api:getStudent
+    methods:  [GET]
+    requirements:
+        id: \d+
+
+add_student:
+    path:     /api/student/add
+    defaults: 
+        _controller: FormerDUTStudentsBundle:Api:addStudent
+    methods:  [POST]
+    
+delete_student:
+    path:     /api/student/delete
+    defaults: 
+        _controller: FormerDUTStudentsBundle:Api:deleteStudent
+    methods:  [POST]
+    
+modify_student:
+    path:     /api/student/modify/{id}
+    defaults: 
+        _controller: FormerDUTStudentsBundle:Api:modifyStudent
+    methods:  [PUT]
+    requirements: 
+        id: \d+

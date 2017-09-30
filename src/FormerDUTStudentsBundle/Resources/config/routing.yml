@@ -31,3 +31,8 @@ modify_student:
     methods:  [PUT]
     requirements: 
         id: \d+
+
+send_mail:
+    path: /api/sendmail
+    defaults:
+        _controller: FormerDUTStudentsBundle:Api:sendMail

@@ -2,16 +2,27 @@
 
 namespace FormerDUTStudentsBundle\Controller;
 
-use FormerDUTStudentsBundle\FormerDUTStudentsBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ApiController extends Controller
 {
-    public function getAllStudentsAction() {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getAllStudentsAction()
+    {
+        /*
+        //check si l'utilisateur est un user -> si oui affiche la page sinon bloque l'accés
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException('Accès limité aux utilisateurs.');
+        }
+        */
+
         $repository = $this->getDoctrine()
             ->getManager()
             ->getRepository('FormerDUTStudentsBundle:Student');
@@ -29,11 +40,23 @@ class ApiController extends Controller
             array_push($jsonArray, $array);
         }
 
+        return new Response($this->getUser());
         //return new JsonResponse($jsonArray);
-        return $this->render('FormerDUTStudentsBundle::index.html.twig');
+        //return $this->render('FormerDUTStudentsBundle::index.html.twig');
     }
 
-    public function getStudent($id) {
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getStudent($id)
+    {
+        /*
+        //check si l'utilisateur est un user -> si oui affiche la page sinon bloque l'accés
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException('Accès limité aux utilisateurs.');
+        }
+        */
+
         $repository = $this->getDoctrine()
             ->getManager()
             ->getRepository('FormerDUTStudentsBundle:Student');
@@ -54,7 +77,18 @@ class ApiController extends Controller
         return new JsonResponse($jsonArray);
     }
 
-    public function addStudentAction(Request $request) {
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function addStudentAction(Request $request)
+    {
+        /*
+        //check si l'utilisateur est un admin -> si oui affiche la page sinon bloque l'accés
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException('Accès limité aux admins.');
+        }
+        */
+
         $repository = $this->getDoctrine()
             ->getManager();
         $data = json_decode($request->getContent(), true);  //permet de récupérer les données en POST
@@ -65,7 +99,18 @@ class ApiController extends Controller
         $repository->flush();
     }
 
-    public function deleteStudentAction(Request $request) {
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function deleteStudentAction(Request $request)
+    {
+        /*
+        //check si l'utilisateur est un admin -> si oui affiche la page sinon bloque l'accés
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException('Accès limité aux admins.');
+        }
+        */
+
         $repository = $this->getDoctrine()
             ->getManager();
         $data = json_decode($request->getContent(), true);
@@ -80,7 +125,18 @@ class ApiController extends Controller
         $repository->flush();
     }
 
-    public function modifyStudentAction(Request $request) {
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function modifyStudentAction(Request $request)
+    {
+        /*
+        //check si l'utilisateur est un admin -> si oui affiche la page sinon bloque l'accés
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException('Accès limité aux admins.');
+        }
+        */
+
         $repository = $this->getDoctrine()
             ->getManager();
         $data = json_decode($request->getContent(), true);
@@ -101,5 +157,14 @@ class ApiController extends Controller
         $student->setIdFormation($data['idformation']);
 
         $repository->flush();
+    }
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function sendMailAction(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
     }
 }

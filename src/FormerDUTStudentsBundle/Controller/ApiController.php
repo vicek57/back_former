@@ -128,7 +128,7 @@ class ApiController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function modifyStudentAction(Request $request)
+    public function editStudentAction(Request $request)
     {
         /*
         //check si l'utilisateur est un admin -> si oui affiche la page sinon bloque l'accés

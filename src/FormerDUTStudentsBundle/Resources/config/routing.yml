@@ -26,10 +26,10 @@ delete_student:
     requirements:
         id: \d+
     
-modify_student:
-    path:     /api/student/modify/{id}
+edit_student:
+    path:     /api/student/edit/{id}
     defaults: 
-        _controller: FormerDUTStudentsBundle:Api:modifyStudent
+        _controller: FormerDUTStudentsBundle:Api:editStudent
     methods:  [PUT]
     requirements: 
         id: \d+
